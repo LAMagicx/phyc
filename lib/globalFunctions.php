@@ -6,6 +6,7 @@ function does_game_exist($id) {
 
 function create_game($id) {
 	$json_data = "{id:$id,users:[]}";
+	file_put_contents("games/".$id.".json");
 }
 
 
