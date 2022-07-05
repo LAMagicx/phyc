@@ -1,5 +1,7 @@
 <?php
 
+require_once("lib/globalFunctions.php");
+
 $request = parse_url($_SERVER['REQUEST_URI']);
 
 $path = $request['path'];
