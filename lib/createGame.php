@@ -1,15 +1,19 @@
 <?php
 
 
-parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $query);
-$ID = $query['id'];
+$ID = $_POST['id'];
 
 if  (does_game_exist($ID)) {
 	// game with id exists goto join
-	echo 'join ?';
+	echo json_encode(array("status" => "error", "res" => "game already exists"));
 } else {
 	// create game
-	create_game($ID);
+	$ret = create_game($ID);
+	if ($ret == 1) {
+		echo json_encode(array("status" => "ok"));
+	} else {
+		echo json_encode(array("status" => "error", "res" => $ret));
+	}
 }
 
 ?>

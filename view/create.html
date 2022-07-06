@@ -1,18 +1,34 @@
-<form action="create-game" method="GET">
+<form>
 	<label for="id">ID: </label>
 	<input type="text" id="game-id" name="id">
-	<button type="submit">create</button>
+	<button type="button" id="submit">create</button>
+	<label id="error"></label>
 </form>
 
+<script src="assets/js/global.js"></script>
 <script>
-	 fetch('/create-id').then(
-		 res => {
-			res.text().then(
-				id => {
-					console.log(id);
-					document.getElementById("game-id").value = id;
-				}
-			)
-		 }
-	 )
+fetch('/create-id').then(
+	res => {
+		res.text().then(
+			id => {
+				document.getElementById("game-id").value = id;
+			}
+		)
+	}
+)
+document.getElementById("submit").onclick = async function submit() {
+	let f = document.querySelector("form");
+	let data = new FormData(f);
+	let res = await fetch("/create-game", {
+		method: 'post',
+		body: data
+	})
+	let ret = await res.json();
+	if (ret['status'] != "ok") {
+		document.getElementById('error').innerText = ret['res'];
+	} else {
+		// create good go to join
+		window.location.href = '/join?id='+document.getElementById("game-id").value;
+	}
+}
 </script>

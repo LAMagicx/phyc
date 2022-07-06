@@ -1,12 +1,18 @@
-<form action="join-game" method="GET">
+<form> 
 	<label for="name">user:</label>
 	<input type="text" id="user" name="user">
 	<label for="id">ID: </label>
 	<input type="text" id="game-id" name="id">
-	<button type="submit">join</button>
+	<button type="button" id="submit">join</button>
+	<label id="error"></label>
 </form>
 
+<script src="assets/js/global.js"></script>
 <script>
+
+if (params.id)
+	document.getElementById("game-id").value = params.id;
+
 names = [
 	"Abigail",
 	"Adriaens",
@@ -149,4 +155,21 @@ names = [
 ]
 
 document.getElementById("user").value = names[Math.floor(Math.random() * names.length)];
+
+document.getElementById("submit").onclick = async function submit() {
+	let f = document.querySelector("form");
+	let data = new FormData(f);
+	let res = await fetch("/join-game", {
+		method: 'post',
+		body: data
+	})
+	let ret = await res.json();
+	if (ret['status'] != "ok") {
+		document.getElementById('error').innerText = ret['res'];
+	} else {
+		//join good go to game lobby
+		window.location.href = '/lobby?id='+document.getElementById("game-id").value;
+	}
+}
+
 </script>

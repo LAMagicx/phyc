@@ -1,5 +1,4 @@
 <?php
-
 require_once("lib/session.php");
 require_once("lib/globalFunctions.php");
 
@@ -28,6 +27,22 @@ switch ($path) {
 	
 	case '/join-game':
 		require('lib/joinGame.php');
+		break;
+
+	case '/game-info':
+		require('lib/gameInfo.php');
+		break;
+	
+	case '/session-info':
+		require('lib/sessionInfo.php');
+		break;
+	
+	case '/leave-game':
+		require('lib/leaveGame.php');
+		break;
+
+	case '/lobby':
+		require('view/lobby.html');
 		break;
 
 	case '/create-id':
