@@ -1,5 +1,6 @@
 <?php
 
+require_once("lib/session.php");
 require_once("lib/globalFunctions.php");
 
 $request = parse_url($_SERVER['REQUEST_URI']);
@@ -17,10 +18,18 @@ switch ($path) {
 		require('view/create.html');
 		break;
 
+	case '/join':
+		require('view/join.html');
+		break;
+
 	case '/create-game':
 		require('lib/createGame.php');
 		break;
 	
+	case '/join-game':
+		require('lib/joinGame.php');
+		break;
+
 	case '/create-id':
 		require('lib/createId.php');
 		break;

@@ -1,0 +1,21 @@
+<?php
+
+
+parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $query);
+$ID = $query['id'];
+$USER = $query['user'];
+
+if  (does_game_exist($ID)) {
+	// game with id exists join game
+	$file = "games/".$ID.".json";
+	$game_data = json_decode(file_get_contents($file));
+	echo $file;
+	print_r($game_data);
+	//array_push($game_data["users"], $USER);
+	file_put_contents($file, json_encode($game_data));
+} else {
+	// game dosen't exist create game ?
+	echo "create ?";
+}
+
+?>
