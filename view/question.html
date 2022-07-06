@@ -1,0 +1,22 @@
+<form>
+	<label for="question">?: </label>
+	<input type="text" name="question" id="question">
+	<button id="submit" type="button">add</button>
+	<label id="error" for="error"></label>
+</form>
+
+<script src="assets/js/global.js"></script>
+<script>
+document.getElementById("submit").onclick = async function submit() {
+	let f = document.querySelector("form");
+	let data = new FormData(f);
+	let res = await fetch("/add-question", {
+		method: 'post',
+		body: data
+	})
+	let ret = await res.json();
+	if (ret['status'] != "ok") {
+		document.getElementById('error').innerText = ret['res'];
+	}
+}
+</script>

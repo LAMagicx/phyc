@@ -12,6 +12,14 @@ switch ($path) {
 	case '/':
 		require('view/index.html');
 		break;
+	
+	case '/question':
+		require('view/question.html');
+		break;
+	
+	case '/add-question':
+		require('lib/addQuestion.php');
+		break;
 
 	case '/create':
 		require('view/create.html');

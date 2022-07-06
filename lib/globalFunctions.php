@@ -18,5 +18,17 @@ function create_game($id) {
 	}
 }
 
+function add_question($q) {
+	try {
+		$file = $_SERVER["DOCUMENT_ROOT"] . "/assets/questions.json";
+		$questions = json_decode(file_get_contents($file, false), true);
+		array_push($questions, $q);
+		file_put_contents($file, json_encode($questions));
+		return 1;
+	} catch (exception $e) {
+		return $e;
+	}
+}
+
 
 ?>
