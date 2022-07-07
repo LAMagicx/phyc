@@ -25,16 +25,24 @@ switch ($path) {
 		require('view/create.html');
 		break;
 
-	case '/join':
-		require('view/join.html');
-		break;
-
 	case '/create-game':
 		require('lib/createGame.php');
+		break;
+
+	case '/join':
+		require('view/join.html');
 		break;
 	
 	case '/join-game':
 		require('lib/joinGame.php');
+		break;
+
+	case '/game':
+		require('view/game.html');
+		break;
+	
+	case '/start-game':
+		require('lib/startGame.php');
 		break;
 
 	case '/game-info':
@@ -55,6 +63,10 @@ switch ($path) {
 
 	case '/create-id':
 		require('lib/createId.php');
+		break;
+
+	case '/update-game':
+		require('lib/updateGame.php');
 		break;
 
 	default:

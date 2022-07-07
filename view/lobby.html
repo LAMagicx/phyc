@@ -2,6 +2,7 @@
 <ul id="players">
 </ul>
 <button id="leave">leave</button>
+<div id="host" class="hidden"><button id="start">start</button></div>
 
 <script src="assets/js/global.js"></script>
 <script>
@@ -17,7 +18,6 @@ function wait_session() {
 }
 
 async function update_players(id) {
-	let d = document.getElementById("players");
 	let data = new FormData();
 	data.append('id', id)
 	let res = await fetch('/game-info', {
@@ -26,6 +26,9 @@ async function update_players(id) {
 	});
 	let ret = await res.json();
 	if (ret['status'] == "ok") {
+		if ('started' in ret['res'])
+			window.location.href = "/game";
+		let d = document.getElementById("players");
 		if (JSON.stringify(players) !== JSON.stringify(ret['res']['users'])){
 			players = ret['res']['users'];
 			d.innerHTML = "";
@@ -52,4 +55,15 @@ document.getElementById("leave").onclick = async function leave() {
 	}
 }
 
+document.getElementById("start").onclick = async function start() {
+	let res = await fetch('start-game', {
+		method: "post"
+	});
+	let data = await res.json();
+	if (data["status"] == "ok") {
+		// succesfully started game
+		//window.location.href = "/";
+		console.log("started");
+	}
+}
 </script>

@@ -10,6 +10,7 @@ if  (does_game_exist($ID)) {
 	// create game
 	$ret = create_game($ID);
 	if ($ret == 1) {
+		$_SESSION['host'] = true;
 		echo json_encode(array("status" => "ok"));
 	} else {
 		echo json_encode(array("status" => "error", "res" => $ret));

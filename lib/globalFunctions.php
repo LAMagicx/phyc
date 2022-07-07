@@ -30,5 +30,16 @@ function add_question($q) {
 	}
 }
 
+function get_random_question($users) {
+	try {
+		$file = $_SERVER["DOCUMENT_ROOT"] . "/assets/questions.json";
+		$questions = json_decode(file_get_contents($file, false), true);
+		$q = str_replace("{NAME}",$users[array_rand($users)],$questions[array_rand($questions)]);
+		return $q;
+	} catch (exception $e) {
+		return "error";
+	}
+}
+
 
 ?>

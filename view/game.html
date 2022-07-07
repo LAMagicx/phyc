@@ -1,0 +1,62 @@
+<h1>started</h1>
+
+<label for="question" id="question"></label>
+
+<form>
+
+	<label for="answer">Answer: </label>
+	<input type="text" name="answer" id="answer">
+	<button type="button" id='send'>send</button>
+
+</form>
+
+
+<button id="leave">leave</button>
+
+<script src="assets/js/global.js"></script>
+<script>
+
+setInterval(update, 1000);
+
+function setText(id, text) {
+	document.getElementById(id).innerText = text;
+}
+
+async function update() {
+	let res = await fetch('/game-info', {
+		method: 'post'
+	});
+	let ret = await res.json();
+	if (ret['status'] == "ok") {
+		setText("question", Object.keys(ret['res']['round'])[0]);
+	} else {
+		// game not found 
+		window.location.href = "/";
+	}
+}
+
+document.getElementById("leave").onclick = async function leave() {
+	let res = await fetch('leave-game', {
+		method: "post"
+	});
+	let data = await res.json();
+	if (data["status"] == "ok") {
+		// succesfully left game
+		window.location.href = "/";
+	}
+}
+
+document.getElementById("send").onclick = async function send() {
+	let fdata = new FormData(document.querySelector("form"));
+	fdata.append("user", USER);
+	fdata.append("question", document.getElementById("question").innerText);
+	let res = await fetch('update-game', {
+		method: "post",
+		body: fdata
+	});
+	let data = await res.json();
+	if (data["status"] == "ok") {
+		console.log(data['res']);
+	}
+}
+</script>

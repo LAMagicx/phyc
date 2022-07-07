@@ -14,9 +14,17 @@ fetch('/session-info')
 			} catch (e) {
 			}
 		}
-		if (GAME_ID && !(["/lobby"].includes(window.location.pathname))){
+		if (GAME_ID && !(["/lobby", "/game"].includes(window.location.pathname))){
 			//console.log("goto lobby");
 			window.location.href = "/lobby";
+		}
+		if (data["res"]["host"] && ["/lobby"].includes(window.location.pathname)) {
+			console.log("host");
+			try {
+				document.getElementById("host").style.display = "block";
+			} catch (e) {
+
+			}
 		}
 	});
 
@@ -25,3 +33,6 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 	get: (searchParams, prop) => searchParams.get(prop),
 });
 
+for (let el of document.getElementsByClassName("hidden")) {
+	el.style.display = "none";
+}
